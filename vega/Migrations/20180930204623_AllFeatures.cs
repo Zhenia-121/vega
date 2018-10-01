@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace vega.Migrations
 {
-    public partial class Vehicle : Migration
+    public partial class AllFeatures : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,6 @@ namespace vega.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Make = table.Column<string>(nullable: true),
                     ModelId = table.Column<int>(nullable: false),
                     ContactName = table.Column<string>(maxLength: 255, nullable: false),
                     ContactPhone = table.Column<string>(maxLength: 255, nullable: false),

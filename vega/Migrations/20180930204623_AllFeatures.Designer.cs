@@ -10,8 +10,8 @@ using vega.DB;
 namespace vega.Migrations
 {
     [DbContext(typeof(VegaDbContext))]
-    [Migration("20180924184837_RepairModels")]
-    partial class RepairModels
+    [Migration("20180930204623_AllFeatures")]
+    partial class AllFeatures
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -90,8 +90,6 @@ namespace vega.Migrations
 
                     b.Property<DateTime>("LastUpdate");
 
-                    b.Property<string>("Make");
-
                     b.Property<int>("ModelId");
 
                     b.HasKey("Id");
@@ -133,12 +131,12 @@ namespace vega.Migrations
             modelBuilder.Entity("vega.Models.VehicleFeature", b =>
                 {
                     b.HasOne("vega.Models.Feature", "Feature")
-                        .WithMany("VehicleFeatures")
+                        .WithMany()
                         .HasForeignKey("FeatureId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("vega.Models.Vehicle", "Vehicle")
-                        .WithMany("VehicleFeatures")
+                        .WithMany("Features")
                         .HasForeignKey("VehicleId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

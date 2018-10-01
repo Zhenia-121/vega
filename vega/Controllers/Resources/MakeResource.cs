@@ -4,21 +4,14 @@ using Newtonsoft.Json;
 
 namespace vega.Controllers.Resources
 {
-    public class MakeResource
+    public class MakeResource: KeyValuePairResource
     {
 
-        [JsonProperty(PropertyName="id")]      
-         public int Id { get; set; }
-
-        [JsonProperty(PropertyName="name")]
-        public string Name { get; set; }
-
-        [JsonProperty(PropertyName="models")]
-        public ICollection<ModelResource> Models { get; set; }
+        public ICollection<KeyValuePairResource> Models { get; set; }
 
         public MakeResource()
         {
-            Models = new Collection<ModelResource>();
+            Models = new Collection<KeyValuePairResource>();
         }
     }
 }

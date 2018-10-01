@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace vega.Controllers.Resources
 {
-    public class Contact
+    public class ContactResource
     {
         [Required]
         public string Name { get; set; }

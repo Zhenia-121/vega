@@ -1,0 +1,17 @@
+[33mcommit c100a0370ab5afc702b8d7995012b951c75d12f0[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31mvega/master[m[33m, [m[1;31morigin/master[m[33m, [m[1;32madded_repository[m[33m)[m
+Author: Zhenia-121 <jenia-121@mail.ru>
+Date:   Mon Sep 24 22:11:06 2018 +0300
+
+    AddedVehicleAPI
+
+[33mcommit 8c55838e2b1ca00eac88bda397117a64eac25b42[m
+Author: Zhenia-121 <jenia-121@mail.ru>
+Date:   Wed Sep 12 08:03:50 2018 +0300
+
+    Add project files.
+
+[33mcommit ee59fe4de47db83299877ff0e667e413e841cba7[m
+Author: Zhenia-121 <jenia-121@mail.ru>
+Date:   Wed Sep 12 08:03:32 2018 +0300
+
+    Add .gitignore and .gitattributes.

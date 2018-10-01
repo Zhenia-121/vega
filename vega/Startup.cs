@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using vega.Core;
 using vega.DB;
+using vega.Persistence;
 
 namespace vega
 {
@@ -32,6 +34,8 @@ namespace vega
             //         .AllowAnyMethod();
             //     });
             // });
+            services.AddScoped<IVehicleRepository, VehicleRepository>();
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             string connection = Configuration.GetConnectionString("Default");

@@ -10,8 +10,6 @@ namespace vega.Models
     public class Vehicle
     {        
         public int Id { get; set; }
-        public string Make { get; set; }
-
         [Required]
         public Model Model { get; set; }
 
@@ -28,10 +26,10 @@ namespace vega.Models
         public string ContactEmail { get; set; }
         public bool IsRegistered { get; set; }
         public DateTime LastUpdate { get; set; }
-        public ICollection<VehicleFeature> VehicleFeatures { get; set; }
+        public ICollection<VehicleFeature> Features { get; set; }
 
         public Vehicle(){
-            VehicleFeatures = new Collection<VehicleFeature>();
+            Features = new Collection<VehicleFeature>();
         }
     }
 }
