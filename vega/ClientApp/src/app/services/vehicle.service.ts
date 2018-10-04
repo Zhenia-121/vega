@@ -9,6 +9,6 @@ import { Http } from '@angular/http';
 export class VehicleService extends DataService {
 
   constructor(http: HttpClient) {
-    super(' ', http);
+    super(http);
   }
 }

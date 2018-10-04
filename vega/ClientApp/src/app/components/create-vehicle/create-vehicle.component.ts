@@ -52,5 +52,9 @@ export class CreateVehicleComponent implements OnInit {
      this.models = selectedMake ? selectedMake.models : [];
      console.log(this.models);
     }
+
+    onSubmit(formValue) {
+
+    }
   }
 

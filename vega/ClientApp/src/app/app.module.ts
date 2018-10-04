@@ -25,6 +25,8 @@ import { HomeComponent } from './components/home/home.component';
       {path: '', redirectTo: 'home', pathMatch: 'full'},
       {path: 'home', component: HomeComponent},
       {path: 'vehicle/new', component: CreateVehicleComponent}
+//      {path: 'vehicle/:id', component: EditVehicleComponent}
+
     ])
   ],
   providers: [
