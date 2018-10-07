@@ -1,53 +1,61 @@
 <h1>New Vehicle</h1>
-<form name="new_vehicle" #f="new_vehicle" (ngSubmit)="onSubmit(f.value)">
+<p>
+  {{vehicle | json}}
+</p>
+<form (ngSubmit)="onSubmit()" ngForm name="vehicleForm" #f="ngForm">
   <div class="form-group">
     <label for="make">Choose Make</label>
-    <select ngModel name="make" #make="ngModel" id="make" (change)="loadModels(make.value)" class="form-control">
+    <select ngModel required name="makeId" #make="ngModel" [(ngModel)] = "vehicle.makeId" id="make" (change)="loadModels(make.value)" class="form-control">
+      <option value=""></option>
       <option *ngFor="let m of makes" [value]="m.id">
         {{m.name}}
       </option>
     </select>
+  <div class="alert alert-danger" *ngIf="make.touched && !make.valid">Please specify a make</div>
   </div>
   <div class="form-group">
     <label for="model">Choose Model</label>
-    <select ngModel name="model" id="model" class="form-control">
+    <select ngModel required name="modelId" [(ngModel)] = "vehicle.modelId" id="model" class="form-control" #model="ngModel">
       <option *ngFor="let mod of models" [value]="mod.id">
         {{ mod.name }}
       </option>
     </select>
+    <div class="alert alert-danger" *ngIf="model.touched && !model.valid">Please specify a model</div>
   </div>
-
-  <div *ngFor="let val of registered">
-    <label>
-      <input ngModel name="isRegistered" type="radio" [value]=val>
-      {{ val }}
-    </label>
-  </div>
+  <div>
+  <label> Is Regestered?
+      <input ngModel name="isRegistered" type="radio" [(ngModel)] ="vehicle.isRegistered" [value]="true">Yes
+      <input ngModel name="isRegistered" type="radio" [(ngModel)] ="vehicle.isRegistered" [value] ="false">No
+  </label>
+</div>
   <h2>Features</h2>
   <div *ngFor="let f of features" class="checkbox">
     <label for="feature{{ f.id}}">
-      <input  ngModel name="choose_feature" type="checkbox" id="feature{{ f.id }}"> {{ f.name }}
+      <input  type="checkbox" id="feature{{ f.id }}"  (change)="onToggleFeature(f.id, $event)"> {{ f.name }}
     </label>
   </div>
   <div ngModelGroup name="contacts" class="form-group">
     <div>
-      <label for="contact_name">Contact Name</label>
-      <textarea ngModel #contact_name="ngModel" name="contact_name" id="contact_name" class="form-control" cols="30"
-        rows="10">
+      <label for="contactName">Contact Name</label>
+      <textarea   [(ngModel)] = "vehicle.contact.name" #contactName="ngModel" name="contactName" id="contactName" class="form-control" required cols="20"
+        rows="5">
         </textarea>
+    <div class="alert alert-danger" *ngIf="contactName.touched && !contactName.valid">Please choose a name</div>
     </div>
     <div>
-      <label for="contact_phone">Contact Phone</label>
-      <textarea ngModel #contact_phone="ngModel" name="contract_phone" id="contract_phone" class="form-control" cols="30"
-        rows="10">
+      <label for="contactPhone">Contact Phone</label>
+      <textarea   [(ngModel)] = "vehicle.contact.phone" #contactPhone=ngModel name="contactPhone" id="contactPhone" class="form-control" required cols="20"
+        rows="5">
         </textarea>
+    <div class="alert alert-danger" *ngIf="contactPhone.touched && !contactPhone.valid">Please choose a name</div>
     </div>
     <div>
-      <label for="contact_email">Contact Email</label>
-      <textarea ngModel #contact_name="ngModel" name="contact_email" id="contact_email" class="form-control" cols="30"
-        rows="10">
+      <label for="contactEmail">Contact Email</label>
+      <textarea   [(ngModel)] = "vehicle.contact.email" name="contactEmail" id="contactEmail" class="form-control" cols="20"
+        rows="5">
         </textarea>
     </div>
   </div>
-  <button class="btn btn-primary">Save</button>
+  <button class="btn btn-primary" [disabled]="!f.valid">Save</button>
+  <button class="btn btn-danger" [disabled]="vehicle.id != 0">Save</button>
 </form>

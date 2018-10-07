@@ -33,8 +33,8 @@ export class DataService {
     }), catchError(this.ErrorHandler));
   }
 
-  createVehicle(newVihecle: SaveVehicle) {
-    return this.http.post(this.url_vehicle, JSON.stringify(newVihecle)).pipe(map((data, index) => {
+  createVehicle(newVihecle) {
+    return this.http.post(this.url_vehicle, newVihecle).pipe(map((data, index) => {
       return data;
     }), catchError(this.ErrorHandler));
   }

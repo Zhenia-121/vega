@@ -5,7 +5,7 @@ export class Vehicle {
   id ?: number;
   make: KeyValuePair;
   models: KeyValuePair;
-  lastUpdate: Date;
+  lastUpdate: string;
   features: KeyValuePair[];
   isRegistered: boolean;
   contact: Contacts;

@@ -9,6 +9,8 @@ import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './components/home/home.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -18,13 +20,17 @@ import { HomeComponent } from './components/home/home.component';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     HttpModule,
     HttpClientModule,
+    ToastrModule.forRoot(),
     RouterModule.forRoot([
       {path: '', redirectTo: 'home', pathMatch: 'full'},
       {path: 'home', component: HomeComponent},
-      {path: 'vehicle/new', component: CreateVehicleComponent}
+      {path: 'vehicle/new', component: CreateVehicleComponent},
+      {path: 'vehicle/:id', component: CreateVehicleComponent},
+      {path: '**', redirectTo: 'home'}
 //      {path: 'vehicle/:id', component: EditVehicleComponent}
 
     ])

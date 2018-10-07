@@ -69,7 +69,12 @@ namespace vega
             // builder.WithOrigins("http://localhost:5000", "http://www.myclientserver.com")
             //     .AllowAnyHeader()
             //     .AllowAnyMethod());
-            app.UseCors(builder => builder.AllowAnyOrigin());
+            app.UseCors(builder => {
+                builder.AllowAnyHeader()
+                .AllowAnyOrigin()
+                .AllowAnyMethod();
+                    }
+                );
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
