@@ -2,9 +2,9 @@ import { KeyValuePair } from './key-value-pair';
 import { Contacts } from './contacts';
 
 export class Vehicle {
-  id ?: number;
+  id: number;
   make: KeyValuePair;
-  models: KeyValuePair;
+  model: KeyValuePair;
   lastUpdate: string;
   features: KeyValuePair[];
   isRegistered: boolean;

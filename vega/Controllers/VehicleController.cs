@@ -58,7 +58,7 @@ namespace vega.Controllers
 
         //update
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateVehicle(int id, [FromBody] SaveVehicleResource vehicleResource) {
+        public async Task<IActionResult> UpdateVehicle([FromBody] SaveVehicleResource vehicleResource, int id) {
             if(!ModelState.IsValid)
                 return BadRequest(ModelState);
 

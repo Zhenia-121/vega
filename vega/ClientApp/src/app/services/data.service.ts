@@ -32,14 +32,20 @@ export class DataService {
       return data;
     }), catchError(this.ErrorHandler));
   }
-
+  getVehicle(id: number) {
+    return this.http.get(this.url_vehicle + '/' + id).pipe(map((data, index) => {
+      return data;
+    }), catchError(this.ErrorHandler));
+  }
   createVehicle(newVihecle) {
     return this.http.post(this.url_vehicle, newVihecle).pipe(map((data, index) => {
       return data;
     }), catchError(this.ErrorHandler));
   }
   updateVehicle(updatedVehicle: SaveVehicle, id: number) {
-      return this.http.put(this.url_vehicle + '/' + id, JSON.stringify(updatedVehicle)).pipe(map((data, index) => {
+    console.log('vehicle before updating:');
+    console.log(updatedVehicle);
+      return this.http.put(this.url_vehicle + '/' + id, updatedVehicle).pipe(map((data, index) => {
           return data;
       }), catchError(this.ErrorHandler));
   }
