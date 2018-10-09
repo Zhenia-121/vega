@@ -14,9 +14,11 @@ import { SaveVehicle } from '../models/SaveVehicle';
   providedIn: 'root'
 })
 export class DataService {
-  url_makes = 'http://localhost:5000/api/makes';
-  url_features = 'http://localhost:5000/api/features';
-  url_vehicle = 'http://localhost:5000/api/vehicle';
+  private base_url = 'http://localhost:5000/api';
+  private url_makes = this.base_url + '/makes';
+  private url_features = this.base_url + '/features';
+  private url_vehicle = this.base_url + '/vehicle';
+  private url_vehicles = this.base_url + '/vehicle';
 
   constructor( private http: HttpClient) { }
 
@@ -37,6 +39,12 @@ export class DataService {
       return data;
     }), catchError(this.ErrorHandler));
   }
+  getAllVehcles() {
+    return this.http.get(this.url_vehicles).pipe(map((data, index) => {
+      return data;
+    }), catchError(this.ErrorHandler));
+  }
+
   createVehicle(newVihecle) {
     return this.http.post(this.url_vehicle, newVihecle).pipe(map((data, index) => {
       return data;

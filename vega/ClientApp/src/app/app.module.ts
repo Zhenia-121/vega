@@ -11,12 +11,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './components/home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
+import { VehiclesListComponent } from './components/vehicles-list/vehicles-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     CreateVehicleComponent,
-    HomeComponent
+    HomeComponent,
+    VehiclesListComponent
   ],
   imports: [
     BrowserModule,
@@ -26,10 +28,11 @@ import { ToastrModule } from 'ngx-toastr';
     HttpClientModule,
     ToastrModule.forRoot(),
     RouterModule.forRoot([
-      {path: '', redirectTo: 'home', pathMatch: 'full'},
+      {path: '', redirectTo: 'vehicles', pathMatch: 'full'},
       {path: 'home', component: HomeComponent},
       {path: 'vehicle/new', component: CreateVehicleComponent},
       {path: 'vehicle/:id', component: CreateVehicleComponent},
+      {path: 'vehicles', component: VehiclesListComponent},
       {path: '**', redirectTo: 'home'}
 //      {path: 'vehicle/:id', component: EditVehicleComponent}
 

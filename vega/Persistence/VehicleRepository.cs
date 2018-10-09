@@ -33,6 +33,12 @@ namespace vega.Persistence
             .SingleOrDefaultAsync(v => v.Id == id);
         }
 
+        public Task<List<Vehicle>> GetAllVehicles(){
+            return Context.Vehicles
+                .Include(v => v.Model)
+                    .ThenInclude(m => m.Make)
+                .ToListAsync();
+        }
         public void Remove(Vehicle vehicle)
         {
             Context.Vehicles.Remove(vehicle);

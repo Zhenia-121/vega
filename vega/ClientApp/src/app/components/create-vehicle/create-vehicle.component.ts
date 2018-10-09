@@ -134,7 +134,7 @@ export class CreateVehicleComponent implements OnInit {
         response => {
           console.log(response);
           this.toastr.success('The vehicle was successfully deleted!', 'Success!');
-          this.router.navigate(['/home']);
+          this.router.navigate(['/vehicles']);
         }
       );
     }

@@ -7,6 +7,7 @@ using vega.Models;
 using vega.Controllers.Resources;
 using System.Threading.Tasks;
 using vega.Core;
+using System.Collections.Generic;
 
 namespace vega.Controllers
 {
@@ -24,6 +25,13 @@ namespace vega.Controllers
             this.unitOfWork = unitOfWork;
         }
         
+        [HttpGet]
+        public async Task<IActionResult> GetVehicles(){
+            var allVehicles = await repository.GetAllVehicles();
+            var result = mapper.Map<List<Vehicle>, List<VehicleResource>>(allVehicles);
+            return Ok(result);
+        }
+
         [HttpGet("{id}")]
         public async Task<IActionResult> GetVehicle(int id) {
 
