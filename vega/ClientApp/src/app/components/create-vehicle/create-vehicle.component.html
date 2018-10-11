@@ -5,7 +5,7 @@
 <form (ngSubmit)="onSubmit()" ngForm name="vehicleForm" #f="ngForm">
   <div class="form-group">
     <label for="make">Choose Make</label>
-    <select ngModel required name="makeId" #make="ngModel" [(ngModel)] = "vehicle.makeId"  id="make" (change)="loadModels()" class="form-control">
+    <select ngModel required name="makeId" #make="ngModel" [(ngModel)] = "vehicle.makeId"  id="make" (change)="loadModels($event, make.name)" class="form-control">
       <option value=""></option>
       <option *ngFor="let m of makes" [value]="m.id">
         {{m.name}}

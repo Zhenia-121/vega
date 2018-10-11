@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -11,21 +12,21 @@ namespace vega.Persistence
 {
     public class VehicleRepository: IVehicleRepository
     {
-        private readonly VegaDbContext Context;
+        private readonly VegaDbContext context;
         public VehicleRepository (VegaDbContext context) {
-            Context = context;
+            this.context = context;
         }
 
         public void Add(Vehicle vehicle)
         {
-            Context.Vehicles.Add(vehicle);
+            context.Vehicles.Add(vehicle);
         }
 
         public Task<Vehicle> GetVehicle(int id, bool includeRelated = true) {
             if(!includeRelated)
-                return Context.Vehicles.FindAsync(id);
+                return context.Vehicles.FindAsync(id);
 
-            return Context.Vehicles
+            return context.Vehicles
             .Include(v => v.Model)
                 .ThenInclude(m => m.Make)
             .Include(v => v.Features)
@@ -33,15 +34,25 @@ namespace vega.Persistence
             .SingleOrDefaultAsync(v => v.Id == id);
         }
 
-        public Task<List<Vehicle>> GetAllVehicles(){
-            return Context.Vehicles
+        public Task<List<Vehicle>> GetAllVehicles(Filter filter = null)
+        {
+
+            var query = context.Vehicles
                 .Include(v => v.Model)
                     .ThenInclude(m => m.Make)
-                .ToListAsync();
+                .Include(v => v.Features)
+                    .ThenInclude(f => f.Feature)
+                .AsQueryable();
+
+            if (filter.MakeId.HasValue)
+                query = query.Where(v => v.Model.MakeId == filter.MakeId);
+            return query.ToListAsync();
+            // .ToListAsync();
         }
         public void Remove(Vehicle vehicle)
         {
-            Context.Vehicles.Remove(vehicle);
+            context.Vehicles.Remove(vehicle);
         }
+
     }
 }

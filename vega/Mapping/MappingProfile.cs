@@ -2,7 +2,7 @@ using System.Linq;
 using AutoMapper;
 using vega.Controllers.Resources;
 using vega.Models;
-
+using vega.Persistence;
 
 namespace vega.Mapping
 {
@@ -26,6 +26,7 @@ namespace vega.Mapping
 
 
             //From Resource to Domain Model
+            CreateMap<FilterResource, Filter>();
             CreateMap<SaveVehicleResource, Vehicle>()
             .ForMember(v => v.ContactName, opt => opt.MapFrom(vr => vr.contact.Name))
             .ForMember(v => v.ContactPhone, opt => opt.MapFrom(vr => vr.contact.Phone))

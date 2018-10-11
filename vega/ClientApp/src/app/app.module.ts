@@ -33,7 +33,7 @@ import { VehiclesListComponent } from './components/vehicles-list/vehicles-list.
       {path: 'vehicle/new', component: CreateVehicleComponent},
       {path: 'vehicle/:id', component: CreateVehicleComponent},
       {path: 'vehicles', component: VehiclesListComponent},
-      {path: '**', redirectTo: 'home'}
+      {path: '**', redirectTo: 'vehicles'}
 //      {path: 'vehicle/:id', component: EditVehicleComponent}
 
     ])

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using vega.Models;
+using vega.Persistence;
 
 namespace vega.Core
 {
@@ -8,7 +9,7 @@ namespace vega.Core
     { 
         Task<Vehicle> GetVehicle(int id, bool includeRelated = true);
 
-        Task<List<Vehicle>> GetAllVehicles();
+        Task<List<Vehicle>> GetAllVehicles(Filter filter);
         void Add(Vehicle vehicle);
 
         void Remove(Vehicle vehicle);

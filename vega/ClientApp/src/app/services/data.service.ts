@@ -9,6 +9,7 @@ import { catchError, map } from 'rxjs/operators';
 // import 'rxjs/add/observable/throw';
 import { NotFound } from '../common/Errors/not-found';
 import { SaveVehicle } from '../models/SaveVehicle';
+import { Filter } from '../models/Filter';
 
 @Injectable({
   providedIn: 'root'
@@ -39,8 +40,8 @@ export class DataService {
       return data;
     }), catchError(this.ErrorHandler));
   }
-  getAllVehcles() {
-    return this.http.get(this.url_vehicles).pipe(map((data, index) => {
+  getAllVehicles(filter: Filter) {
+    return this.http.get(this.url_vehicles + '?' + this.getQueryString(filter)).pipe(map((data, index) => {
       return data;
     }), catchError(this.ErrorHandler));
   }
@@ -62,7 +63,19 @@ export class DataService {
         return data;
     }), catchError(this.ErrorHandler));
 }
+  getQueryString(obj) {
+    const params = [];
+    // tslint:disable-next-line:forin
+    for (const property in obj) {
+      const value = obj[property];
+      if (value != null && value !== undefined) {
+        params.push(encodeURIComponent(property) + '=' + encodeURIComponent(value));
+      }
+      console.log(params.join('&'));
+      return params.join('&');
+    }
 
+  }
   private ErrorHandler(error: Response) {
     if (error.status === 400) {
       return throwError(new BadInput());

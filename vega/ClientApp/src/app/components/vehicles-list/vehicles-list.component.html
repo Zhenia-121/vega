@@ -1,11 +1,24 @@
-<p>
-  Vehicles
-</p>
+<h1>Vehicles</h1>
+<button class="btn-link" [routerLink]="['/vehicle/new']">New Vehicle</button>
+<div class="well">
+  <div class="form-group">
+    <label for="make"> Choose the make for filtering  </label>
+      <select ngModel name="makeFiltering" id="make"  #makeFiltering="ngModel" [(ngModel)]="filter.makeId" (change)="doFilter()" class="form-contol">
+        <option value="">
+          All
+        </option>
+        <option *ngFor="let m of makes" [value]="m.id">
+          {{ m.name }}
+        </option>
+      </select>
+  </div>
+  <button class="btn btn-default" (click)="resetFilter()">Reset</button>
+</div>
 <table class="table">
   <caption>List of Vehicles</caption>
   <thead>
     <tr>
-      <th>Id</th>
+      <th>#</th>
       <th>Make</th>
       <th>Model</th>
       <th>Contact Name</th>
