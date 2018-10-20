@@ -2,15 +2,16 @@
 <button class="btn-link" [routerLink]="['/vehicle/new']">New Vehicle</button>
 <div class="well">
   <div class="form-group">
-    <label for="make"> Choose the make for filtering  </label>
-      <select ngModel name="makeFiltering" id="make"  #makeFiltering="ngModel" [(ngModel)]="filter.makeId" (change)="doFilter()" class="form-contol">
-        <option value="">
-          All
-        </option>
-        <option *ngFor="let m of makes" [value]="m.id">
-          {{ m.name }}
-        </option>
-      </select>
+    <label for="make"> Choose the make for filtering </label>
+    <select ngModel name="makeFiltering" id="make" #makeFiltering="ngModel" [(ngModel)]="query.makeId" (change)="doFilter()"
+      class="form-contol">
+      <option value="">
+        All
+      </option>
+      <option *ngFor="let m of makes" [value]="m.id">
+        {{ m.name }}
+      </option>
+    </select>
   </div>
   <button class="btn btn-default" (click)="resetFilter()">Reset</button>
 </div>
@@ -18,15 +19,23 @@
   <caption>List of Vehicles</caption>
   <thead>
     <tr>
-      <th>#</th>
-      <th>Make</th>
-      <th>Model</th>
-      <th>Contact Name</th>
-      <th>View</th>
+      <th *ngFor="let column of columns">
+        <div *ngIf="column.isSortable" (click)="onSort(column.key)">
+          {{column.title}}
+          <i *ngIf="query.sortBy === column.key"
+              class="fa"
+              [class.fa-sort-asc]="query.isAscending"
+              [class.fa-sort-desc]="!query.isAscending">
+          </i>
+        </div>
+        <div *ngIf="!column.isSortable">
+          {{column.title}}
+        </div>
+      </th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor = 'let v of vehicles'>
+    <tr *ngFor='let v of vehicles'>
       <td> {{ v.id }}</td>
       <td> {{ v.make.name }} </td>
       <td> {{ v.model.name }} </td>

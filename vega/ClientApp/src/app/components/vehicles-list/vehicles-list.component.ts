@@ -1,4 +1,4 @@
-import { Filter } from './../../models/Filter';
+import { VehicleQuery } from '../../models/VehicleQuery';
 import { KeyValuePair } from './../../models/key-value-pair';
 import { Vehicle } from './../../models/vehicle';
 import { DataService } from './../../services/data.service';
@@ -17,7 +17,14 @@ export class VehiclesListComponent implements OnInit {
   vehicles: Vehicle[];
   allVehicles: Vehicle[];
   makes: make[];
-  filter: Filter = {};
+  query: any = {};
+  columns = [
+    {title: 'Id', key: 'Id', isSortable: false },
+    {title: 'Make', key: 'make', isSortable: true },
+    {title: 'Model', key: 'model', isSortable: true },
+    {title: 'Contact Name', key: 'contactName', isSortable: true},
+    {}
+];
 
   constructor(private dataService: DataService) { }
 
@@ -27,8 +34,8 @@ export class VehiclesListComponent implements OnInit {
         this.dataService.getMakes().subscribe(response => {
           console.log(response);
           this.makes = <make[]>response;
+          console.log(this.makes);
         });
-        console.log(this.makes);
   }
 
   // getMakes() {
@@ -39,19 +46,28 @@ export class VehiclesListComponent implements OnInit {
   //   return  makeList.filter((m, index, makes) => makes.lastIndexOf(m, 0) === index);
   // }
   populateVehicles() {
-    this.dataService.getAllVehicles(this.filter).subscribe(response => {
+    this.dataService.getAllVehicles(this.query).subscribe(response => {
       console.log(response);
       this.vehicles = <Vehicle[]>response;
     });
   }
   doFilter() {
-    if (this.filter.makeId) {
+    if (this.query.makeId) {
       this.populateVehicles();
     }
   }
+  onSort(columnName: string) {
+    if (columnName === this.query.sortBy) {
+      this.query.isAscending = !this.query.isAscending;
+    } else {
+      this.query.sortBy = columnName;
+      this.query.isAscending = true;
+    }
+    this.populateVehicles();
+  }
   resetFilter() {
-    this.filter = {};
-    this.doFilter();
+    this.query = {};
+    this.populateVehicles();
   }
 
 }
