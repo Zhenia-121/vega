@@ -1,0 +1,25 @@
+<label for="make">Make</label>
+<p id='make'>vehicle.Make.Name</p>
+<label for="model">Model</label>
+<p id=model>vehicle.Model.Name</p>
+<label for="registration">Registration</label>
+<p id='registration'>vehicle.IsRegistration</p>
+<label for="features">Feature</label>
+<div id='features'>
+  <label for="">Features</label>
+  <p *ngFor='let f of vehicle.features'> {{f}} </p>
+</div>
+<div>
+  <div>
+    <label for="contactName">Contact Name</label>
+    <p>vehicle.contactName</p>
+  </div>
+  <div>
+    <label for="contactPhone">Contact Phone</label>
+    <p>vehicle.contactName</p>
+  </div>
+  <div>
+    <label for="contactMail">Contact Mail</label>
+    <p>vehicle.contactName</p>
+  </div>
+</div>

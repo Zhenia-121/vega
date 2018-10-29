@@ -1,3 +1,4 @@
+import { PaginationComponent } from './../shared/pagination.component';
 import { VehicleQuery } from '../../models/VehicleQuery';
 import { KeyValuePair } from './../../models/key-value-pair';
 import { Vehicle } from './../../models/vehicle';
@@ -14,10 +15,13 @@ import { make } from '../../models/make';
   styleUrls: ['./vehicles-list.component.css']
 })
 export class VehiclesListComponent implements OnInit {
+  private readonly PAGE_SIZE = 3;
+  queryResult = {};
   vehicles: Vehicle[];
-  allVehicles: Vehicle[];
   makes: make[];
-  query: any = {};
+  query: any = {
+    pageSize: this.PAGE_SIZE
+  };
   columns = [
     {title: 'Id', key: 'Id', isSortable: false },
     {title: 'Make', key: 'make', isSortable: true },
@@ -48,11 +52,13 @@ export class VehiclesListComponent implements OnInit {
   populateVehicles() {
     this.dataService.getAllVehicles(this.query).subscribe(response => {
       console.log(response);
-      this.vehicles = <Vehicle[]>response;
+      // this.vehicles = <Vehicle[]>response;
+      this.queryResult = response;
     });
   }
   doFilter() {
     if (this.query.makeId) {
+      this.query.pageNumber = 1,
       this.populateVehicles();
     }
   }
@@ -66,7 +72,14 @@ export class VehiclesListComponent implements OnInit {
     this.populateVehicles();
   }
   resetFilter() {
-    this.query = {};
+    this.query = {
+      pageNumber: 1,
+      pageSize: this.PAGE_SIZE
+    };
+    this.populateVehicles();
+  }
+  onPageChanged(currentPage: number) {
+    this.query.pageNumber = currentPage;
     this.populateVehicles();
   }
 

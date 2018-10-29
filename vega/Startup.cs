@@ -9,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using vega.Core;
 using vega.DB;
+using vega.Models;
 using vega.Persistence;
 
 namespace vega
@@ -34,6 +35,8 @@ namespace vega
             //         .AllowAnyMethod();
             //     });
             // });
+            services.Configure<PhotoSettings>(Configuration.GetSection("PhotoSettings"));
+            services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddScoped<IVehicleRepository, VehicleRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddCors();
@@ -63,6 +66,7 @@ namespace vega
             }
 
             //app.UseHttpsRedirection();
+            app.UseDefaultFiles();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
             // app.UseCors(builder =>

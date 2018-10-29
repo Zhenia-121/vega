@@ -11,6 +11,8 @@ namespace vega.Mapping
         public MappingProfile()
         {
             //From Domain to Resources
+            CreateMap<Photo, PhotoResource>();
+            CreateMap(typeof(QueryResult<>), typeof(QueryResultResource<>));
             CreateMap<Make, MakeResource>();
             CreateMap<Model, KeyValuePairResource>();
             CreateMap<Feature, KeyValuePairResource>();
@@ -26,7 +28,7 @@ namespace vega.Mapping
 
 
             //From Resource to Domain Model
-            CreateMap<FilterResource, VehicleQuery>();
+            CreateMap<VehicleQueryResource, VehicleQuery>();
             CreateMap<SaveVehicleResource, Vehicle>()
             .ForMember(v => v.ContactName, opt => opt.MapFrom(vr => vr.contact.Name))
             .ForMember(v => v.ContactPhone, opt => opt.MapFrom(vr => vr.contact.Phone))

@@ -45,11 +45,11 @@ export class CreateVehicleComponent implements OnInit {
     private route: ActivatedRoute,
     private dataService: DataService,
     private toastr: ToastrService) {
-       route.params.subscribe(p => {
-        console.log(p);
-        this.vehicle.id = +p['id'];
-      });
-              }
+    route.params.subscribe(p => {
+      console.log(p);
+      this.vehicle.id = +p['id'] || 0;
+    });
+  }
 
   ngOnInit() {
     // this.vehicle.modelId  = 0;
@@ -71,16 +71,16 @@ export class CreateVehicleComponent implements OnInit {
     }
 
     Observable.forkJoin(sources)
-    .subscribe(data => {
-      this.makes = data[0] as make[];
-      this.features = data[1] as feature[];
-      console.log(this.features);
-      // console.log(data[2]);
-      if (this.vehicle.id !== 0) {
-        this.setVehicle(<Vehicle>data[2]);
-        this.populateModels();
-      }
-    }, this.ErrHandler);
+      .subscribe(data => {
+        this.makes = data[0] as make[];
+        this.features = data[1] as feature[];
+        console.log(this.features);
+        // console.log(data[2]);
+        if (this.vehicle.id !== 0) {
+          this.setVehicle(<Vehicle>data[2]);
+          this.populateModels();
+        }
+      }, this.ErrHandler);
   }
   private setVehicle(serverVehicle: Vehicle) {
     this.vehicle.id = serverVehicle.id;
@@ -103,30 +103,24 @@ export class CreateVehicleComponent implements OnInit {
     this.populateModels();
     delete this.vehicle.modelId;
   }
-    onToggleFeature(featureId, $event) {
-      if ($event.target.checked) {
-        this.vehicle.features.push(featureId);
-      } else {
-        const index = this.vehicle.features.indexOf(featureId);
-        this.vehicle.features.splice(index, 1);
-      }
-    }
-  onSubmit() {
-    if (this.vehicle.id) {
-      console.log('Update');
-        this.dataService.updateVehicle(this.vehicle, this.vehicle.id).subscribe(
-          response => {
-            console.log(response);
-            this.toastr.success('The vehicle was successfully updated!', 'Success!');
-          }, this.ErrHandler);
+  onToggleFeature(featureId, $event) {
+    if ($event.target.checked) {
+      this.vehicle.features.push(featureId);
     } else {
-      console.log('Save');
-      this.dataService.createVehicle(this.vehicle).subscribe(
-        response => {
-          console.log(response);
-          this.toastr.success('The vehicle was successfully created!', 'Success!');
-        }, this.ErrHandler);
+      const index = this.vehicle.features.indexOf(featureId);
+      this.vehicle.features.splice(index, 1);
     }
+  }
+  onSubmit() {
+    const result$ = (this.vehicle.id) ?
+      this.dataService.updateVehicle(this.vehicle, this.vehicle.id) :
+      this.dataService.createVehicle(this.vehicle);
+    result$.subscribe(
+      response => {
+        console.log(response);
+        this.toastr.success('The vehicle was successfully saved!', 'Success!');
+      }, this.ErrHandler);
+      this.router.navigate(['/vehicle', this.vehicle.id]);
   }
   private delete() {
     if (confirm('Are you sure to deleting the vehicle')) {

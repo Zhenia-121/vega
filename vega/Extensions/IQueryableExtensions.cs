@@ -21,5 +21,15 @@ namespace vega.Extensions
             else return query;
 
         }
+        public static IQueryable<T> Pagination<T>(
+            this IQueryable<T> query,
+            IQueryObject queryObject)
+        {
+            if (queryObject.pageNumber > 0 && queryObject.pageSize != 0)  
+                return query.Skip(queryObject.pageSize * (queryObject.pageNumber-1)).Take(queryObject.pageSize);
+            if (queryObject.pageSize == 0)
+                return query;
+            return query.Take(queryObject.pageSize);
+        }
     }
 }
