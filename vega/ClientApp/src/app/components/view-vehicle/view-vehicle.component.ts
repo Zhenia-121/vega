@@ -1,3 +1,4 @@
+import { AuthenticationService } from './../../services/auth-service.service';
 import { Vehicle } from './../../models/vehicle';
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -26,7 +27,8 @@ export class ViewVehicleComponent implements OnInit {
   constructor(private router: Router,
     private route: ActivatedRoute,
     private dataService: DataService,
-    private photoService: PhotoService) {
+    private photoService: PhotoService,
+    private authService: AuthenticationService) {
     route.params.subscribe(p => {
       this.vehicleId = +p['id'];
     });

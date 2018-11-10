@@ -1,3 +1,4 @@
+import { AuthenticationService } from 'src/app/services/auth-service.service';
 import { PaginationComponent } from './../shared/pagination.component';
 import { VehicleQuery } from '../../models/VehicleQuery';
 import { KeyValuePair } from './../../models/key-value-pair';
@@ -30,7 +31,8 @@ export class VehiclesListComponent implements OnInit {
     {}
 ];
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService,
+    private authService: AuthenticationService) { }
 
   ngOnInit() {
       this.populateVehicles();

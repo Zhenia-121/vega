@@ -1,4 +1,3 @@
-
 <ul class="nav nav-tabs">
   <li [ngClass]="{'active': currentTab=='#basic'}"><a data-toggle="tab" (click)="changeTab($event)" data-target='#basic'>Vehicle</a></li>
   <li [ngClass]="{'active': currentTab=='#photos'}"><a data-toggle="tab" data-target='#photos' (click)="changeTab($event)" >Photos</a></li>
@@ -35,8 +34,8 @@
       </div>
     </div>
     <div>
-      <button class="btn btn-primary" [routerLink]="['/vehicle/edit', vehicleId]">Edit </button>
-      <button class="btn btn-danger" (click)="onDelete()">Delete</button>
+      <button *ngIf="authService.isLoggedIn()" class="btn btn-primary" [routerLink]="['/vehicle/edit', vehicleId]">Edit </button>
+      <button *ngIf="authService.isLoggedIn()" class="btn btn-danger" (click)="onDelete()">Delete</button>
       <button class="btn btn-default" [routerLink]="['/vehicles']">List All Vehicles</button>
     </div>
   </div>

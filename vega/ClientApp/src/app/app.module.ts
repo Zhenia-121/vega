@@ -15,10 +15,12 @@ import { ToastrModule } from 'ngx-toastr';
 import { VehiclesListComponent } from './components/vehicles-list/vehicles-list.component';
 import { PaginationComponent } from './components/shared/pagination.component';
 import { ViewVehicleComponent } from './components/view-vehicle/view-vehicle.component';
-import { LoginFormComponent } from './components/login-form/login-form.component';
+import { LoginFormComponent } from './components/account/login-form/login-form.component';
 import { ErrorInterceptor } from './components/helpers/error.interceptor';
 import { JwtInterceptor } from './components/helpers/jwt.interceptor';
 import { AuthGuard } from './guards/auth.guard';
+import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
+import { RegistrationFormComponent } from './components/account/registration-form/registration-form.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,7 +29,9 @@ import { AuthGuard } from './guards/auth.guard';
     VehiclesListComponent,
     PaginationComponent,
     ViewVehicleComponent,
-    LoginFormComponent
+    LoginFormComponent,
+    NavMenuComponent,
+    RegistrationFormComponent
   ],
   imports: [
     BrowserModule,
@@ -44,6 +48,7 @@ import { AuthGuard } from './guards/auth.guard';
       {path: 'vehicle/:id', component: ViewVehicleComponent},
       {path: 'vehicles', component: VehiclesListComponent},
       {path: 'login', component: LoginFormComponent},
+      {path: 'register', component: RegistrationFormComponent},
       {path: '**', redirectTo: 'vehicles'}
 //      {path: 'vehicle/:id', component: EditVehicleComponent}
 

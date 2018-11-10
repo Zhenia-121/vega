@@ -1,5 +1,5 @@
 <h1>Vehicles</h1>
-<button class="btn-link" [routerLink]="['/vehicle/new']">New Vehicle</button>
+<button *ngIf="authService.isLoggedIn()" class="btn-link" [routerLink]="['/vehicle/new']">New Vehicle</button>
 <div class="well">
   <div class="form-group">
     <label for="make"> Choose the make for filtering </label>

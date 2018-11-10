@@ -1,4 +1,4 @@
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from 'selenium-webdriver/http';
 import { AuthenticationService } from 'src/app/services/auth-service.service';
@@ -18,17 +18,18 @@ export class LoginFormComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private authenticationService: AuthenticationService) { }
+    private authService: AuthenticationService) { }
   ngOnInit() {
   }
 
   sendCredentials(credentials) {
     this.submitted = true;
-    this.authenticationService.login(credentials.username, credentials.password)
+    this.returnUrl = this.route.snapshot.queryParamMap.get('returnUrl');
+    this.authService.login(credentials.username, credentials.password)
       .pipe(first())
       .subscribe(
         data => {
-          this.router.navigate([this.returnUrl]);
+            this.router.navigate([this.returnUrl || '/']);
         },
         error => {
           this.error = error;

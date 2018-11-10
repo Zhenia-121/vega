@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using vega.Core;
 using System.Collections.Generic;
 using vega.Persistence;
+using Microsoft.AspNetCore.Authorization;
 
 namespace vega.Controllers
 {
@@ -25,7 +26,7 @@ namespace vega.Controllers
             this.repository = repository;
             this.unitOfWork = unitOfWork;
         }
-        
+
         [HttpGet]
         public async Task<QueryResultResource<VehicleResource>> GetVehicles(VehicleQueryResource queryResource){
             var query = mapper.Map<VehicleQueryResource, VehicleQuery>(queryResource);

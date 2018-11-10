@@ -28,6 +28,8 @@ namespace vega.Models
         public DateTime LastUpdate { get; set; }
         public ICollection<VehicleFeature> Features { get; set; }
 
+        public int AccountId { get; set; }
+        public Account Owner { get; set; }
         public ICollection<Photo> Photos { get; set; }
         public Vehicle(){
             Features = new Collection<VehicleFeature>();
