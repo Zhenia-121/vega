@@ -40,22 +40,6 @@ namespace vega
         public void ConfigureServices(IServiceCollection services)
         {
             
-
-
-
-            // var builder = services.AddIdentityCore<Account>(o =>
-            // {
-            //     // configure identity options
-            //     o.Password.RequireDigit = false;
-            //     o.Password.RequireLowercase = false;
-            //     o.Password.RequireUppercase = false;
-            //     o.Password.RequireNonAlphanumeric = false;
-            //     o.Password.RequiredLength = 6;
-            // });
-            // builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
-            // builder.AddEntityFrameworkStores<VegaDbContext>().AddDefaultTokenProviders();
-
-
             services.AddOptions();
             services.Configure<PhotoSettings>(Configuration.GetSection(nameof(PhotoSettings)));
             services.Configure<InitialAuthSettings>(Configuration.GetSection(nameof(InitialAuthSettings)));
@@ -67,14 +51,29 @@ namespace vega
             services.AddScoped<IPhotoRepository, PhotoRepository>();
             services.AddScoped<IVehicleRepository, VehicleRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IAccountInterface, AccountService>();
+            services.AddScoped<IAccountService, AccountService>();
 
             services.AddCors();
 
             string connection = Configuration.GetConnectionString("Default");
             services.AddDbContext<VegaDbContext>(options => options.UseSqlServer(connection));
+
+
+             //настройка политики паролей
+            var builder = services.AddIdentityCore<Account>(o =>
+            {
+                // configure identity options
+                o.Password.RequireDigit = false;
+                o.Password.RequireLowercase = false;
+                o.Password.RequireUppercase = false;
+                o.Password.RequireNonAlphanumeric = false;
+                o.Password.RequiredLength = 6;
+            });
+            builder = new IdentityBuilder(builder.UserType, typeof(IdentityRole), builder.Services);
+            builder.AddEntityFrameworkStores<VegaDbContext>().AddDefaultTokenProviders();
             services.AddIdentity<Account, IdentityRole>()
                 .AddEntityFrameworkStores<VegaDbContext>();
+           
 
 
             services.AddAutoMapper();
@@ -152,6 +151,8 @@ namespace vega
             // builder.WithOrigins("http://localhost:5000", "http://www.myclientserver.com")
             //     .AllowAnyHeader()
             //     .AllowAnyMethod());
+            
+
             app.UseCors(builder =>
             {
                 builder.AllowAnyHeader()
@@ -167,18 +168,18 @@ namespace vega
                     template: "{controller}/{action=Index}/{id?}");
             });
 
-            // app.UseSpa(spa =>
-            // {
-            //     // To learn more about options for serving an Angular SPA from ASP.NET Core,
-            //     // see https://go.microsoft.com/fwlink/?linkid=864501
+            app.UseSpa(spa =>
+            {
+                // To learn more about options for serving an Angular SPA from ASP.NET Core,
+                // see https://go.microsoft.com/fwlink/?linkid=864501
 
-            //     spa.Options.SourcePath = "ClientApp";
+                spa.Options.SourcePath = "ClientApp";
 
-            //     if (env.IsDevelopment())
-            //     {
-            //         spa.UseAngularCliServer(npmScript: "start");
-            //     }
-            // });
+                if (env.IsDevelopment())
+                {
+                    spa.UseAngularCliServer(npmScript: "start");
+                }
+            });
         }
     }
 }

@@ -11,6 +11,7 @@ namespace vega.Mapping
         public MappingProfile()
         {
             //From Domain to Resources
+            CreateMap<Account, AccountResource>();
             CreateMap<Photo, PhotoResource>();
             CreateMap(typeof(QueryResult<>), typeof(QueryResultResource<>));
             CreateMap<Make, MakeResource>();

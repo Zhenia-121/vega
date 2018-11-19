@@ -1,0 +1,17 @@
+<div class="row">
+  <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
+    <ul class="nav nav-pills flex-column">
+      <li class="nav-item">
+        <a class="nav-link" href="#" routerLinkActive="active" routerLink="./new"><span class='glyphicon glyphicon-list'></span>New Vehicle</a>
+        <!-- <a class="nav-link" href="#" routerLinkActive="active" routerLink="./new"><span class='glyphicon glyphicon-list'></span>New Vehicle</a> -->
+      </li>
+      <li class="nav-item">
+        <!-- <a class="nav-link" href="#" routerLinkActive="active" routerLink="./list"><span class='glyphicon glyphicon-plus'></span>Vehicles</a> -->
+        <a class="nav-link" routerLinkActive="active" routerLink="./list"><span class='glyphicon glyphicon-plus'></span>Vehicles</a>
+      </li>
+    </ul>
+  </nav>
+  <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+      <router-outlet></router-outlet>
+  </main>
+</div>

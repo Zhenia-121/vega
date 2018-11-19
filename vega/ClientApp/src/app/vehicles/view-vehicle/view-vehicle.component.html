@@ -1,0 +1,53 @@
+<ul class="nav nav-tabs">
+  <li [ngClass]="{'active': currentTab=='#basic'}"><a data-toggle="tab" (click)="changeTab($event)" data-target='#basic'>Vehicle</a></li>
+  <li [ngClass]="{'active': currentTab=='#photos'}"><a data-toggle="tab" data-target='#photos' (click)="changeTab($event)" >Photos</a></li>
+</ul>
+<div class="tab-content" *ngIf="vehicle">
+  <div id="basic" [ngClass]="{'active': currentTab=='#basic'}" class="tab-pane">
+    <div>
+      <h1>Basics</h1>
+      <ul>
+        <li>Make: {{vehicle.make.name}}</li>
+        <li>Model: {{vehicle.model.name}}</li>
+        <li>Registration: {{vehicle.isRegistered ? 'Yes': 'No'}}</li>
+      </ul>
+    </div>
+    <div>
+      <h1>Features</h1>
+      <ul>
+        <li *ngFor='let f of vehicle.features'> {{f.name}} </li>
+      </ul>
+    </div>
+    <div>
+      <h1>Contact</h1>
+      <div>
+        <label for="contactName">Contact Name</label>
+        <p>{{vehicle.contact.name}}</p>
+      </div>
+      <div>
+        <label for="contactPhone">Contact Phone</label>
+        <p>{{vehicle.contact.phone}}</p>
+      </div>
+      <div>
+        <label for="contactMail">Contact Mail</label>
+        <p>{{vehicle.contact.email}}</p>
+      </div>
+    </div>
+    <div>
+      <button *ngIf="authService.isLoggedIn()" class="btn btn-primary" [routerLink]="['../edit', vehicleId]">Edit </button>
+      <button *ngIf="authService.isLoggedIn()" class="btn btn-danger" (click)="onDelete()">Delete</button>
+      <button class="btn btn-default" [routerLink]="['../list']">List All Vehicles</button>
+    </div>
+  </div>
+  <div id="photos" [ngClass]="{'active': currentTab=='#photos'}" class="tab-pane">
+    <h1>Uploads Photo</h1>
+    <input type="file" (change)="uploadFile()" #photoInput>Choose file
+    <div *ngIf="isShowProgressBar()" class="progress">
+      <div class="progress-bar progress-bar-info progress-bar-striped" role="progressbar" attr.aria-valuenow="{{progress.percentage}}"
+        aria-valuemin="0" aria-valuemax="100" [ngStyle]="{width:progress.percentage+'%'}">
+        {{progress.percentage}}%</div>
+    </div>
+    <img *ngFor='let photo of photos' src="http://localhost:5000/uploads/{{photo.fileName}}" class="img-thumbnail"> <br/>
+    <!-- <img *ngFor='let file of fileUploads | async' src="http://localhost:5000/uploads/{{file.fileName}}" class="img-thumbnail"> <br/> -->
+  </div>
+</div>

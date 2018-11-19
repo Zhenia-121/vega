@@ -11,7 +11,7 @@ using vega.Models;
 
 namespace vega.Services
 {
-    public class AccountService : IAccountInterface
+    public class AccountService : IAccountService
     {
         private readonly UserManager<Account> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -37,6 +37,7 @@ namespace vega.Services
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimsIdentity.DefaultNameClaimType, userToVerify.UserName),
+                    new Claim("id", userToVerify.Id)
                 };
                 if (roles.Contains("admin"))
                     claims.Add(new Claim(ClaimsIdentity.DefaultRoleClaimType, "admin"));
@@ -53,17 +54,20 @@ namespace vega.Services
             return await Task.FromResult<ClaimsIdentity>(null);;
         }
 
-        public async Task<Account> Create(Account user, string password)
+        public async Task<(Account, Dictionary<string, string>)> Create(Account user, string password)
         {
             var result = await _userManager.CreateAsync(user, password);
+            var errors = result.Errors;
             if (!result.Succeeded) 
-                return null;
+                return (null, errors.ToDictionary(e => e.Code, e => e.Description));
             //var role = _roleManager.Roles.Where(r => r.Name == "user");
             var resultRole = await _userManager.AddToRoleAsync(user, Roles.user.ToString());
+            errors.Concat(resultRole.Errors);
             if (!resultRole.Succeeded)
-                return null;
+                return (null, errors.ToDictionary(e => e.Code, e => e.Description));
+
             var saveUser = await _userManager.Users.SingleOrDefaultAsync(u => u.UserName == user.UserName);
-            return saveUser;
+            return (saveUser, null);
         }
 
         public async void Delete(string id)
@@ -72,14 +76,9 @@ namespace vega.Services
             await _userManager.DeleteAsync(user);
         }
 
-        public async Task<IEnumerable<Account>> GetAll()
+        public IEnumerable<Account> GetAll()
         {
-            IEnumerable<Account> accounts = null;
-            var roles = _roleManager.Roles.Select(r => r.Name).ToList();
-            foreach (var role in roles) {
-                var accountsForRole = await _userManager.GetUsersInRoleAsync(role);
-                accounts.Concat(accountsForRole.AsEnumerable());
-            }
+            var accounts = _userManager.Users.AsEnumerable();
             return accounts;
         }
 

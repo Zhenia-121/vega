@@ -1,0 +1,10 @@
+<div class="row">
+  <div class="col-md-6 col-sm-3">
+    <p>{{homeDetails?.message}}</p>
+    <p><strong>Name:</strong> {{homeDetails?.firstName}} {{homeDetails?.lastName}}</p>
+    <p *ngIf="homeDetails?.userName"><strong>User Name:</strong> {{homeDetails?.userName}}</p>
+    <!-- <p *ngIf="homeDetails?.locale"><strong>Locale:</strong> {{homeDetails?.locale}}</p> -->
+    <p *ngIf="homeDetails?.email"><strong>Email:</strong> {{homeDetails?.email}}</p>
+    <div *ngIf="homeDetails?.pictureUrl"><img src="{{homeDetails?.pictureUrl}}" /></div>
+  </div>
+</div>

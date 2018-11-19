@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-md-6">
+    <h2>Please enter your information</h2>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <form #f="ngForm" novalidate (ngSubmit)="registerUser(f)">
+      <div class="form-group">
+        <label for="user-name">User name</label>
+        <input required type="text" class="form-control" id="user-name" placeholder="User name" #userName="ngModel" name="userName"  ngModel>
+        <div *ngIf="userName.touched && !userName.valid" class="alert alert-danger">User name is required</div>
+      </div>
+      <div class="form-group">
+        <label for="first-name">First name</label>
+        <input required type="text" class="form-control" id="first-name" placeholder="First name" name="firstName" #firstName="ngModel" tmFocus
+          ngModel>
+        <div *ngIf="firstName.touched && !firstName.valid" class="alert alert-danger">First name is required</div>
+      </div>
+      <div class="form-group">
+        <label for="last-name">Last name</label>
+        <input required type="text" class="form-control" id="last-name" placeholder="Last name" name="lastName" #lastName="ngModel" ngModel>
+        <div *ngIf="lastName.touched && !lastName.valid" class="alert alert-danger">Last name is required</div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input id="email" type="text" required name="email" validateEmail class="form-control" placeholder="Email"
+          ngModel #email="ngModel">
+        <small [hidden]="email.valid || (email.pristine && !submitted)" class="text-danger">Please enter a valid email</small>
+      </div>
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input required type="password" class="form-control" id="password" name="password" placeholder="Password" #password="ngModel" ngModel>
+        <div *ngIf="password.touched && !touched.valid">Please enter password</div>
+      </div>
+      <div class="form-group">
+        <label for="phoneNumber">Phone Number</label>
+        <input type="text" class="form-control" id="phoneNumber" placeholder="Phone number" required name="phoneNumber" #phoneNumber="ngModel" ngModel>
+      </div>
+      <div class="form-group">
+        <button type="submit" class="btn btn-primary" [disabled]="isRequesting">Sign Up</button>
+      </div>
+      {{ f | json }}
+      <div *ngIf="errors" class="alert alert-danger" role="alert">
+        <strong>Oops!</strong> {{errors}}
+      </div>
+
+    </form>
+  </div>
+</div>

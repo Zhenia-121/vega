@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="col-md-6 new-user-alert">
+    <h1>Enter your login information</h1>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <form ngForm #f="ngForm" (ngSubmit)="sendCredentials(f.value)">
+      <div>
+        <label for="username">User Name</label>
+        <input required ngModel name="username" type="text" id="username" placeholder="username" class="form-control">
+        <div *ngIf="submitted && f.username.errors" class="invalid-feedback">
+          <div *ngIf="f.username.errors.required">User Name is required</div>
+        </div>
+      </div>
+      <div>
+        <label for="password">Password</label>
+        <input required ngModel name="password" type="password" id="password" placeholder="password" class="form-control">
+        <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+          <div *ngIf="f.password.errors.required">Password is required</div>
+        </div>
+      </div>
+      <button [disabled]="f.invalid || isRequesting" class="btn btn-primary" type="submit">Sign In</button>
+      <div *ngIf="errors" class="alert alert-danger" role="alert">
+          <strong>Oops!</strong> {{errors}}
+        </div>
+    </form>
+  </div>
+</div>
